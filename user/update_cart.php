@@ -1,0 +1,1 @@
+<?php session_start(); foreach($_POST as $k=>$v){ if(strpos($k,'qty_')===0){ $id=intval(substr($k,4)); $q=max(1,intval($v)); if(isset($_SESSION['cart'][$id])) $_SESSION['cart'][$id]['qty']=$q; } } header('Location: cart.php'); exit; ?>

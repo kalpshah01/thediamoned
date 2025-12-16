@@ -1,0 +1,12 @@
+CREATE DATABASE IF NOT EXISTS restaurant_db;
+USE restaurant_db;
+CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), email VARCHAR(150) UNIQUE, password VARCHAR(255), role ENUM('user','admin') DEFAULT 'user', created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS employees (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), phone VARCHAR(20));
+CREATE TABLE IF NOT EXISTS menu_items (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(150), category VARCHAR(80), price DECIMAL(10,2), description TEXT, image VARCHAR(255), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS table_bookings (id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, booking_date DATE, booking_time TIME, guests INT, status ENUM('Pending','Confirmed','Cancelled') DEFAULT 'Pending', created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS orders (id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, total_amount DECIMAL(10,2), payment_method VARCHAR(50), payment_screenshot VARCHAR(255), employee_id INT, status ENUM('Placed','Preparing','Out for Delivery','Delivered') DEFAULT 'Placed', delivery_estimate_minutes INT NULL, start_time DATETIME NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS order_items (id INT AUTO_INCREMENT PRIMARY KEY, order_id INT, item_name VARCHAR(150), price DECIMAL(10,2), qty INT);
+CREATE TABLE IF NOT EXISTS employee_locations (id INT AUTO_INCREMENT PRIMARY KEY, employee_id INT, lat DOUBLE, lng DOUBLE, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
+INSERT INTO employees (name,phone) VALUES ('Amit Delivery','9876543210'),('Jay Rider','9871112233');
+INSERT INTO users (name,email,password,role) VALUES ('Admin','admin@example.com', '$2y$10$KbQiXy6QKxw1Z8e4vK6zSuXh8uC0zYQq9v1yKc3oHqQ1j9Y4H6FQK', 'admin');
+INSERT INTO menu_items (name,category,price,description,image) VALUES ('Veg Thali','Main',120.00,'Delicious veg thali.','assets/images/placeholder-dish.jpg'),('Paneer Butter Masala','Main',180.00,'Creamy paneer.','assets/images/placeholder-dish.jpg');
